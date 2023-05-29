@@ -1,5 +1,5 @@
 <?php
-    var_dump($_GET);
+    //var_dump($_GET);
 ?>
 <?php include_once '../../includes/header.php'?>
     <div class="container">

@@ -1,5 +1,5 @@
 <?php
-require '../../modelos/Productos.php';
+require '../../modelo/productos.php';
 try {
     $producto = new Producto($_GET);
     
