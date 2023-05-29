@@ -21,4 +21,9 @@ class Producto extends Conexion{
         $resultado = self::ejecutar($sql);
         return $resultado;
     }
+    public function buscar(){
+        $sql = "INSERT INTO productos(producto_nombre, producto_precio) values('$this->producto_nombre','$this->producto_precio')";
+        $resultado = self::ejecutar($sql);
+        return $resultado;
+    }
 }

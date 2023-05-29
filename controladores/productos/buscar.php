@@ -47,10 +47,10 @@ try {
                         <?php foreach($productos as $key => $producto) : ?>
                         <tr>
                             <td><?= $key + 1 ?></td>
-                            <td><?= $producto['PRODUCTO_NOMBRE'] ?></td>
-                            <td><?= $producto['PRODUCTO_PRECIO'] ?></td>
+                            <td><?= $producto['producto_nombre'] ?></td>
+                            <td><?= $producto['producto_precio'] ?></td>
                             <td><a class="btn btn-warning w-100"
-                                    href="/crub_BD_PHP/vista/productos/modificar.php?producto_id=<?= $producto['PRODUCTO_ID']?>">Modificar</a>
+                                    href="/crub_BD_PHP/vista/productos/modificar.php?producto_id=<?= $producto['producto_id']?>">Modificar</a>
                             </td>
                             <td><a class="btn btn-danger w-100" href="">Eliminar</a></td>
                         </tr>
