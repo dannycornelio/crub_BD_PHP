@@ -9,16 +9,19 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/crud_BD_PHP/vistas/ventas/index.php">Ventas</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Productos
                     </a>
                     <ul class="dropdown-menu bg-dark">
                         <li class="nav-item">
-                            <a class="nav-link" href="/crudphp18may2023/vistas/productos/index.php">Crear producto</a>
+                            <a class="nav-link" href="/crud_BD_PHP/vistas/productos/index.php">Crear producto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/crudphp18may2023/vistas/productos/buscar.php">Buscar producto</a>
+                            <a class="nav-link" href="/crud_BD_PHP/vistas/productos/buscar.php">Buscar producto</a>
                         </li>
                     </ul>
                 </li>
