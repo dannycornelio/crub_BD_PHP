@@ -1,5 +1,5 @@
 <?php
-require 'Conexion.php';
+require_once 'Conexion.php';
 
 class Producto extends Conexion{
     public $producto_id;

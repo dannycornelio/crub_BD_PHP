@@ -4,7 +4,11 @@ try {
     $producto = new Producto($_GET);
     
     $productos = $producto->buscar();
-
+    // echo "<pre>";
+    // var_dump($productos);
+    // echo "</pre>";
+    // exit;
+    // $error = "NO se guardó correctamente";
 } catch (PDOException $e) {
     $error = $e->getMessage();
 } catch (Exception $e2){
@@ -33,7 +37,7 @@ try {
                             <th>PRECIO</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
-                        </tr>  
+                        </tr>
                     </thead>
                     <tbody>
                         <?php if(count($productos) > 0):?>
@@ -42,8 +46,8 @@ try {
                             <td><?= $key + 1 ?></td>
                             <td><?= $producto['PRODUCTO_NOMBRE'] ?></td>
                             <td><?= $producto['PRODUCTO_PRECIO'] ?></td>
-                            <td><a class="btn btn-warning w-100" href="/crud_BD_PHP/vistas/productos/modificar.php?producto_id=<?= $producto['PRODUCTO_ID']?>">Modificar</a></td>
-                            <td><a class="btn btn-danger w-100" href="/crud_BD_PHP/controladores/productos/eliminar.php?producto_id=<?= $producto['PRODUCTO_ID']?>">Eliminar</a></td>
+                            <td><a class="btn btn-warning w-100" href="/crudphp18may2023/vistas/productos/modificar.php?producto_id=<?= $producto['PRODUCTO_ID']?>">Modificar</a></td>
+                            <td><a class="btn btn-danger w-100" href="/crudphp18may2023/controladores/productos/eliminar.php?producto_id=<?= $producto['PRODUCTO_ID']?>">Eliminar</a></td>
                         </tr>
                         <?php endforeach ?>
                         <?php else :?>
@@ -57,7 +61,7 @@ try {
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-4">
-                <a href="/crud_BD_PHP/vistas/productos/buscar.php" class="btn btn-info w-100">Volver al formulario</a>
+                <a href="/crudphp18may2023/vistas/productos/buscar.php" class="btn btn-info w-100">Volver al formulario</a>
             </div>
         </div>
     </div>

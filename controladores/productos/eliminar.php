@@ -48,7 +48,7 @@ require '../../modelos/Producto.php';
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="/crud_BD_PHP/controladores/productos/buscar.php" class="btn btn-info">Volver al formulario</a>
+                <a href="/crudphp18may2023/controladores/productos/buscar.php" class="btn btn-info">Volver al formulario</a>
             </div>
         </div>
     </div>

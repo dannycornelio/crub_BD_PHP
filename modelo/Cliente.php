@@ -1,5 +1,5 @@
 <?php
-require 'Conexion.php';
+require_once 'Conexion.php';
 
 class Cliente extends Conexion{
     public $cliente_id;

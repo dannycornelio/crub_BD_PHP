@@ -14,14 +14,18 @@ btnCancelar.parentElement.style.display = 'none'
 const guardar = async (evento) => {
     evento.preventDefault();
     if(!validarFormulario(formulario, ['producto_id'])){
-        alert('Debe llenar todos los campos');
+        Swal.fire({
+            icon:'error',
+            title:"Error",
+            text:`Por favor ingrese todos los campos`,
+        });
         return 
     }
 
     const body = new FormData(formulario)
     body.append('tipo', 1)
     body.delete('producto_id')
-    const url = '/crud_BD_PHP/controladores/productos/index.php';
+    const url = '/crudphp18may2023/controladores/productos/index.php';
     const config = {
         method : 'POST',
         // body: otroNombre
@@ -48,7 +52,11 @@ const guardar = async (evento) => {
                 break;
         }
 
-        alert(mensaje);
+        Swal.fire({
+            icon: codigo ===1 ? 'success' : 'error',
+            title: codigo ===1 ? 'Éxito' : 'error',
+            text: mensaje,
+        });
 
     } catch (error) {
         console.log(error);
@@ -59,7 +67,7 @@ const buscar = async () => {
 
     let producto_nombre = formulario.producto_nombre.value;
     let producto_precio = formulario.producto_precio.value;
-    const url = `/crud_BD_PHP/controladores/productos/index.php?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
+    const url = `/crudphp18may2023/controladores/productos/index.php?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
     const config = {
         method : 'GET'
     }
@@ -119,18 +127,116 @@ const buscar = async () => {
             tr.appendChild(td)
             fragment.appendChild(tr);
         }
-
+        divTabla.style.display = data.length > 0 ? '' : 'none';
         tablaProductos.tBodies[0].appendChild(fragment)
+
     } catch (error) {
         console.log(error);
     }
 }
 
+
+const modificar = async () => {
+    const body = new FormData(formulario);
+    body.append('tipo', 2); // Tipo 2 para indicar que es una operación de modificar
+    const url = '/crudphp18may2023/controladores/productos/index.php';
+    const config = {
+        method: 'POST',
+        body,
+    };
+
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+
+        const { codigo, mensaje, detalle } = data;
+
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                buscar();
+                cancelarAccion();
+                break;
+
+            case 0:
+                console.log(detalle);
+                break;
+
+            default:
+                break;
+        }
+
+        alert(mensaje);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const eliminar = async (id) => {
+    const result = await Swal.fire({
+        icon: 'warning',
+        title: 'Eliminar producto',
+        text: '¿Desea eliminar este producto?',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+        const body = new FormData();
+        body.append('producto_id', id);
+        body.append('tipo', 3); // Tipo 3 para indicar que es una operación de eliminar
+        const url = '/crudphp18may2023/controladores/productos/index.php';
+        const config = {
+            method: 'POST',
+            body,
+        };
+
+        try {
+            const respuesta = await fetch(url, config);
+            const data = await respuesta.json();
+
+            const { codigo, mensaje, detalle } = data;
+
+            switch (codigo) {
+                case 1:
+                    buscar();
+                    break;
+
+                case 0:
+                    console.log(detalle);
+                    break;
+
+                default:
+                    break;
+            }
+
+            Swal.fire({
+                icon: codigo === 1 ? 'success' : 'error',
+                title: codigo === 1 ? 'Éxito' : 'Error',
+                text: mensaje,
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    }else{
+        
+    }
+};
+
+
+
+
+
+
 const colocarDatos = (datos) => {
     formulario.producto_nombre.value = datos.PRODUCTO_NOMBRE
     formulario.producto_precio.value = datos.PRODUCTO_PRECIO
     formulario.producto_id.value = datos.PRODUCTO_ID
-
+    
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
     btnBuscar.disabled = true
@@ -155,15 +261,10 @@ const cancelarAccion = () => {
 }
 
 
-const eliminar = (id) => {
-    if(confirm("¿Desea eliminar este producto?")){
-        alert("eliminando")
-    }
-}
+// buscar();
 
 
-buscar();
-
+btnModificar.addEventListener('click', modificar);
 formulario.addEventListener('submit', guardar )
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
