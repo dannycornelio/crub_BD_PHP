@@ -1,22 +1,39 @@
 <?php
-require '../../modelos/Producto.php';
+require_once '../../modelos/Venta.php';
+require_once '../../modelos/Detalle.php';
 
+$productos = array_filter($_POST['productos']);
+$cantidades = array_filter($_POST['cantidades']);
+$_POST['venta_fecha'] = str_replace('T',' ', $_POST['venta_fecha']);
+if($_POST['venta_cliente'] != '' && $_POST['venta_fecha'] != '' && count($productos)>0 && count($cantidades)>0){
 
-if($_POST['producto_nombre'] != '' && $_POST['producto_precio'] != ''){
-
+    
 
 
     try {
-        $producto = new Producto($_POST);
-        $resultado = $producto->guardar();
-        $error = "NO se guardó correctamente";
+        $venta = new Venta($_POST);
+        $resultado = $venta->guardar();
+        $idInsertado = $resultado['id'];
+        $i = 0;
+        foreach ($productos as $key => $producto) {
+            $detalle = new Detalle([
+                'detalle_venta' => $idInsertado,
+                'detalle_producto' => $producto,
+                'detalle_cantidad' => $cantidades[$i]
+            ]);
+            $detalle->guardar();
+            $i++;
+
+        }
+
+        
     } catch (PDOException $e) {
         $error = $e->getMessage();
     } catch (Exception $e2){
         $error = $e2->getMessage();
     }
 }else{
-    $error = "Debe llenar todos los datos";
+    $error = "Debe llenar todos los datos y seleccionar al menos un producto";
 }
 
 
@@ -54,7 +71,7 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio'] != ''){
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="/crudphp18may2023/vistas/productos/index.php" class="btn btn-info">Volver al formulario</a>
+                <a href="/crudphp18may2023/vistas/ventas/index.php" class="btn btn-info">Volver al formulario</a>
             </div>
         </div>
     </div>
