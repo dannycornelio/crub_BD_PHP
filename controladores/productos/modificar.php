@@ -19,13 +19,6 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio']  != '' && $_POST
     $error = "Debe llenar todos los datos";
 }
 
-
-// if($resultado){
-//     echo "Guardado exitosamente";
-// }else{
-//     echo "Ocurrió un error: $error";
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -60,4 +53,3 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio']  != '' && $_POST
     </div>
 </body>
 </html>
-

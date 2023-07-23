@@ -4,11 +4,7 @@ try {
     $producto = new Producto($_GET);
     
     $productos = $producto->buscar();
-    // echo "<pre>";
-    // var_dump($productos);
-    // echo "</pre>";
-    // exit;
-    // $error = "NO se guardó correctamente";
+
 } catch (PDOException $e) {
     $error = $e->getMessage();
 } catch (Exception $e2){
@@ -37,7 +33,7 @@ try {
                             <th>PRECIO</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
-                        </tr>
+                        </tr>  
                     </thead>
                     <tbody>
                         <?php if(count($productos) > 0):?>
