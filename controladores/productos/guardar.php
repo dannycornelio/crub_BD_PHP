@@ -1,5 +1,6 @@
 <?php
 require '../../modelos/Producto.php';
+var_dump(filter_var($_POST['producto precio']));
 
 
 if($_POST['producto_nombre'] != '' && $_POST['producto_precio'] != ''){
@@ -20,11 +21,6 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio'] != ''){
 }
 
 
-// if($resultado){
-//     echo "Guardado exitosamente";
-// }else{
-//     echo "Ocurrió un error: $error";
-// }
 
 ?>
 <!DOCTYPE html>
@@ -60,5 +56,3 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio'] != ''){
     </div>
 </body>
 </html>
-
-
