@@ -20,8 +20,37 @@
                     <div class="col">
                         <button type="submit" class="btn btn-primary w-100">Guardar</button>
                     </div>
+                    <div class="col">
+                        <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" id="btnBuscar" class="btn btn-info w-100">Buscar</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
+                    </div>
                 </div>
             </form>
         </div>
+        <div class="row justify-content-center" id="divTabla">
+            <div class="col-lg-8">
+                <h2>Listado de clientes</h2>
+                <table class="table table-bordered table-hover" id="tablaClientes">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>NO. </th>
+                            <th>NOMBRE DEL CLIENTE</th>
+                            <th>NIT DEL CLIENTE</th>
+                            <th>MODIFICAR</th>
+                            <th>ELIMINAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    <script src="../../src/js/funciones.js"></script>
+    <script src="../../src/js/clientes/index.js"></script>
 <?php include_once '../../includes/footer.php'?>

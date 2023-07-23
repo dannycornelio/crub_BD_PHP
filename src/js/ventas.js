@@ -1,1 +1,0 @@
-alert("hola mundo, desde la carpeta assets")
