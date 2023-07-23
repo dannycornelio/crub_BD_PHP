@@ -2,14 +2,14 @@
 require '../../modelos/Cliente.php';
 
 
-if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
+if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit']  != '' && $_POST['cliente_id'] != ''){
 
 
 
     try {
         $cliente = new Cliente($_POST);
-        $resultado = $cliente->guardar();
-        $error = "NO se guardó correctamente";
+        $resultado = $cliente->modificar();
+
     } catch (PDOException $e) {
         $error = $e->getMessage();
     } catch (Exception $e2){
@@ -18,13 +18,6 @@ if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
 }else{
     $error = "Debe llenar todos los datos";
 }
-
-
-// if($resultado){
-//     echo "Guardado exitosamente";
-// }else{
-//     echo "Ocurrió un error: $error";
-// }
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +35,7 @@ if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
             <div class="col-lg-6">
                 <?php if($resultado): ?>
                     <div class="alert alert-success" role="alert">
-                        Guardado exitosamente!
+                        Modificado exitosamente!
                     </div>
                 <?php else :?>
                     <div class="alert alert-danger" role="alert">
@@ -54,7 +47,7 @@ if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="/practica_9/vistas/clientes/index.php" class="btn btn-info">Volver al formulario</a>
+                <a href="/practica_9/controladores/clientes/buscar.php?cliente_nombre=<?= $_POST['cliente_nombre'] ?>" class="btn btn-info">Volver al formulario</a>
             </div>
         </div>
     </div>

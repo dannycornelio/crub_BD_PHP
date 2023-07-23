@@ -2,22 +2,16 @@
 require '../../modelos/Cliente.php';
 
 
-if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
-
-
-
     try {
-        $cliente = new Cliente($_POST);
-        $resultado = $cliente->guardar();
-        $error = "NO se guardó correctamente";
+        $cliente = new Cliente($_GET);
+        $resultado = $cliente->eliminar();
+
     } catch (PDOException $e) {
         $error = $e->getMessage();
     } catch (Exception $e2){
         $error = $e2->getMessage();
     }
-}else{
-    $error = "Debe llenar todos los datos";
-}
+
 
 
 // if($resultado){
@@ -42,7 +36,7 @@ if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
             <div class="col-lg-6">
                 <?php if($resultado): ?>
                     <div class="alert alert-success" role="alert">
-                        Guardado exitosamente!
+                        Eliminado exitosamente!
                     </div>
                 <?php else :?>
                     <div class="alert alert-danger" role="alert">
@@ -54,7 +48,7 @@ if($_POST['cliente_nombre'] != '' && $_POST['cliente_nit'] != ''){
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="/practica_9/vistas/clientes/index.php" class="btn btn-info">Volver al formulario</a>
+                <a href="/practica_9/controladores/clientes/buscar.php" class="btn btn-info">Volver al formulario</a>
             </div>
         </div>
     </div>
