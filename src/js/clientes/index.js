@@ -11,11 +11,11 @@ btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
 btnCancelar.parentElement.style.display = 'none'
 
-const guardar = async (evento) => {
-    evento.preventDefault();
+const guardar = async (e) => {
+    e.preventDefault();
     if(!validarFormulario(formulario, ['cliente_id'])){
-        alert('Debe llenar todos los campos');
-        return 
+        Swal.fire({ icon: 'error', text: 'Debe llenar todos los campos'})
+        return; 
     }
 
     const body = new FormData(formulario)
@@ -37,17 +37,20 @@ const guardar = async (evento) => {
             case 1:
                 formulario.reset();
                 buscar();
+                Swal.fire({icon: 'success', text: 'Se guardo exitosamente'})
                 break;
         
             case 0:
                 console.log(detalle)
+                Swal.fire({ icon: 'error', text: 'Debe llenar todos los campos'})
                 break;
         
             default:
                 break;
         }
+        Swal.fire({icon: 'success', text: 'Se guardo exitosamente'})
+        return; 
 
-        alert(mensaje);
 
     } catch (error) {
         console.log(error);
@@ -122,6 +125,8 @@ const buscar = async () => {
 
         tablaCLientes.tBodies[0].appendChild(fragment)
     } catch (error) {
+        Swal.fire({ icon: 'error', text: 'Debe llenar todos los campos'})
+        return; 
         console.log(error);
     }
 }
@@ -216,7 +221,9 @@ const eliminar = async (id) => {
                 case 1:
                     formulario.reset();
                     buscar();
+                    cancelarAccion();
                     break;
+    
             
                 case 0:
                     console.log(detalle)
@@ -226,13 +233,18 @@ const eliminar = async (id) => {
                     break;
             }
     
-            alert(mensaje);
+            Swal.fire({
+                icon: 'success',
+                title: 'Bien',
+                text: 'Se modifico exitosamente',
+              })
+
+            return; 
     
         } catch (error) {
             console.log(error);
         }
     }
-
 
 buscar();
 

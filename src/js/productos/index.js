@@ -11,10 +11,15 @@ btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
 btnCancelar.parentElement.style.display = 'none'
 
-const guardar = async (evento) => {
-    evento.preventDefault();
+const guardar = async (e) => {
+    e.preventDefault();
     if(!validarFormulario(formulario, ['producto_id'])){
-        alert('Debe llenar todos los campos');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe llenar todos los campos',
+          })
+        // alert('Debe llenar todos los campos');
         return 
     }
 
@@ -207,8 +212,8 @@ const realizarAccionTipo3 = () => {
 };
 
 
-const modificar = async (evento) => {
-    evento.preventDefault();
+const modificar = async (e) => {
+    e.preventDefault();
     if(!validarFormulario(formulario)){
         alert('Debe llenar todos los campos');
         return 

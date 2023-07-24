@@ -4,7 +4,7 @@
         <h1 class="text-center">Formulario de ingreso de clientes</h1>
         <div class="row justify-content-center">
             <form class="col-lg-8 border bg-light p-3">
-                <input type="text" name="cliente_id" id="cliente_id" >
+                <input type="hidden" name="cliente_id" id="cliente_id" >
                 <div class="row mb-3">
                     <div class="col">
                     <label for="cliente_nombre">Nombre del cliente</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-primary w-100">Guardar</button>
                     </div>
                     <div class="col">
                         <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
