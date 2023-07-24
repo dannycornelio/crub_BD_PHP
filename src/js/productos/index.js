@@ -11,8 +11,8 @@ btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
 btnCancelar.parentElement.style.display = 'none'
 
-const guardar = async (evento) => {
-    evento.preventDefault();
+const guardar = async (e) => {
+    e.preventDefault();
     if(!validarFormulario(formulario, ['producto_id'])){
         alert('Debe llenar todos los campos');
         return 
@@ -154,61 +154,11 @@ const cancelarAccion = () => {
 }
 
 
-// const eliminar5 = (id) => {
-//     if(confirm("¿Desea eliminar este producto?")){
-//         alert("eliminando")
-//     }
-// }
 
 
-const eliminar = (id) => {
-    if (confirm("¿Desea eliminar este producto?")) {
-        // Realizar la llamada al servidor para eliminar el producto
-        fetch(`eliminar_producto.php?id=${id}`, {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Aquí puedes manejar la respuesta del servidor si es necesario
-            // No es necesario mostrar una alerta aquí, ya que ya mostramos un mensaje en la función buscar()
-            // alert("Producto eliminado exitosamente");
 
-            // Luego de eliminar, realizamos la petición POST tipo 3 para limpiar el formulario
-            realizarAccionTipo3();
-        })
-        .catch(error => {
-            // Manejar el error si ocurre
-            console.error('Error al eliminar el producto:', error);
-        });
-    }
-};
-
-const realizarAccionTipo3 = () => {
-    const body = new FormData(formulario);
-    body.append('tipo', 3);
-    body.delete('producto_id');
-    const url = '/crudphp18may2023/controladores/productos/index.php';
-    const config = {
-        method : 'POST',
-        body
-    };
-
-    fetch(url, config)
-    .then(response => response.json())
-    .then(data => {
-        // Aquí puedes manejar la respuesta del servidor si es necesario
-        alert("Acción tipo 3 realizada exitosamente");
-        // También puedes realizar alguna otra acción si es necesario
-    })
-    .catch(error => {
-        // Manejar el error si ocurre
-        console.error('Error al realizar la acción tipo 3:', error);
-    });
-};
-
-
-const modificar = async (evento) => {
-    evento.preventDefault();
+const modificar = async (e) => {
+    e.preventDefault();
     if(!validarFormulario(formulario)){
         alert('Debe llenar todos los campos');
         return 

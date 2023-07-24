@@ -191,47 +191,47 @@ const eliminar = async (id) => {
     }
 
 
-const modificar = async (evento) => {
-    evento.preventDefault();
-    if(!validarFormulario(formulario)){
-        alert('Debe llenar todos los campos');
-        return 
-    }
-
-    const body = new FormData(formulario)
-    body.append('tipo', 2)
-    const url = '/crudphp18may2023/controladores/clientes/index.php';
-    const config = {
-        method : 'POST',
-        body
-    }
-
-    try {
-        const respuesta = await fetch(url, config)
-        const data = await respuesta.json();
-        
-        const {codigo, mensaje, detalle} = data;
-
-        switch (codigo) {
-            case 1:
-                formulario.reset();
-                buscar();
-                break;
-        
-            case 0:
-                console.log(detalle)
-                break;
-        
-            default:
-                break;
+    const modificar = async (e) => {
+        e.preventDefault();
+        if(!validarFormulario(formulario)){
+            alert('Debe llenar todos los campos');
+            return 
         }
-
-        alert(mensaje);
-
-    } catch (error) {
-        console.log(error);
+    
+        const body = new FormData(formulario)
+        body.append('tipo', 2)
+        const url = '/crudphp18may2023/controladores/clientes/index.php';
+        const config = {
+            method : 'POST',
+            body
+        }
+    
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+            
+            const {codigo, mensaje, detalle} = data;
+    
+            switch (codigo) {
+                case 1:
+                    formulario.reset();
+                    buscar();
+                    break;
+            
+                case 0:
+                    console.log(detalle)
+                    break;
+            
+                default:
+                    break;
+            }
+    
+            alert(mensaje);
+    
+        } catch (error) {
+            console.log(error);
+        }
     }
-}
 
 
 buscar();

@@ -20,12 +20,6 @@ if($_POST['producto_nombre'] != '' && $_POST['producto_precio']  != '' && $_POST
 }
 
 
-// if($resultado){
-//     echo "Guardado exitosamente";
-// }else{
-//     echo "Ocurrió un error: $error";
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
