@@ -160,46 +160,67 @@ const cancelarAccion = () => {
 }
 
 
-const eliminar = async (id) => {
-    if(confirm("¿Desea eliminar este cliente?")){
-        
-        const url = `/crudphp18may2023/controladores/clientes/index.php?tipo=1&cliente_id=${id}`;
-        const config = {
-            method : 'GET'
-        }
+const eliminar =async (id) => {
+    const result = await Swal.fire({
+        icon: 'warning',
+        title: 'Eliminar producto',
+        text: '¿Desea eliminar este producto?',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+    });
 
+    if (result.isConfirmed) {
+        const body = new FormData(formulario);
+        body.append('cliente_id', id);
+        body.append('tipo', 3); // Tipo 3 para indicar que es una operación de eliminar
+        const url = '/crudphp18may2023/controladores/clientes/index.php';
+        const config = {
+            method: 'POST',
+            body,
+        };
         try {
-            const respuesta = await fetch(url, config)
+            const respuesta = await fetch(url, config);
             const data = await respuesta.json();
-            
-            const {codigo, mensaje, detalle} = data;
+
+            const { codigo, mensaje, detalle } = data;
 
             switch (codigo) {
                 case 1:
                     buscar();
                     break;
-            
+
                 case 0:
-                    console.log(detalle, mensaje)
+                    console.log(detalle);
                     break;
-            
+
                 default:
                     break;
             }
 
-            alert(mensaje);
+            Swal.fire({
+                icon: codigo === 1 ? 'success' : 'error',
+                title: codigo === 1 ? 'Éxito' : 'Error',
+                text: mensaje,
+            });
 
-            } catch (error) {
-                console.log(error);
-            }
+        } catch (error) {
+            console.log(error);
         }
+    }else{
+        
     }
-
+};
 
     const modificar = async (e) => {
         e.preventDefault();
         if(!validarFormulario(formulario)){
-            alert('Debe llenar todos los campos');
+            Swal.fire({
+                icon: 'error',
+                text: 'No se pudo modificar',
+              })
             return 
         }
     
@@ -235,7 +256,6 @@ const eliminar = async (id) => {
     
             Swal.fire({
                 icon: 'success',
-                title: 'Bien',
                 text: 'Se modifico exitosamente',
               })
 

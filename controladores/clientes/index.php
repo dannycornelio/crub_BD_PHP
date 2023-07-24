@@ -17,6 +17,10 @@
                     $resultado = $cliente->modificar();
                     $mensaje = "Se modificó correctamente";
                 }
+                if($tipo == 3){
+                    $resultado = $cliente->eliminar();
+                    $mensaje = "Se elimino correctamente";
+                }
 
                 if($resultado){
                     echo json_encode([
