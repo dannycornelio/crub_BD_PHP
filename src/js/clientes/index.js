@@ -6,6 +6,7 @@ const btnGuardar = document.getElementById('btnGuardar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
 
+
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'
 btnCancelar.disabled = true
@@ -164,7 +165,7 @@ const eliminar =async (id) => {
     const result = await Swal.fire({
         icon: 'warning',
         title: 'Eliminar producto',
-        text: '¿Desea eliminar este producto?',
+        text: '¿Desea eliminar este cliente?',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
