@@ -17,10 +17,6 @@
                     $resultado = $cliente->modificar();
                     $mensaje = "Se modificó correctamente";
                 }
-                if($tipo == 3){
-                    $resultado = $cliente->eliminar();
-                    $mensaje = "Se eliminó correctamente";
-                }
 
                 if($resultado){
                     echo json_encode([
@@ -35,11 +31,33 @@
                 }
 
                 break;
+                
             case 'GET':
                 $cliente = new Cliente($_GET);
-                $clientes = $cliente->buscar();
 
-                echo json_encode($clientes);
+                if(isset($_GET['tipo'])){
+
+                    $resultado = $cliente->eliminar();
+                    $mensaje = "Se Eliminó correctamente";
+
+                    if($resultado){
+                        echo json_encode([
+                            'mensaje' => $mensaje,
+                            'codigo' => 1
+                        ]);
+                    }else{
+                        echo json_encode([
+                            'mensaje' => 'Ocurrió un error',
+                            'codigo' => 0
+                        ]);
+                    }
+
+                }else{
+                    $clientes = $cliente->buscar();
+                    echo json_encode($clientes);
+                }
+               
+                
                 break;
             
             default:

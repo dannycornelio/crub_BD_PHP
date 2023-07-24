@@ -91,10 +91,11 @@ const buscar = async () => {
 
                 buttonModificar.addEventListener('click', () => colocarDatos(cliente))
                 buttonEliminar.addEventListener('click', () => eliminar(cliente.CLIENTE_ID))
+                console.log(cliente.cliente_id);
 
                 td1.innerText = contador;
-                td2.innerText = cliente.CLIENTE_NOMBRE
-                td3.innerText = cliente.CLIENTE_NIT
+                td2.innerText = cliente.CLIENTE_NOMBRE;
+                td3.innerText = cliente.CLIENTE_NIT;
                 
                 
                 // ESTRUCTURANDO DOM
@@ -154,11 +155,40 @@ const cancelarAccion = () => {
 }
 
 
-const eliminar = (id) => {
+const eliminar = async (id) => {
     if(confirm("¿Desea eliminar este cliente?")){
-        alert("eliminando")
+        
+        const url = `/crudphp18may2023/controladores/clientes/index.php?tipo=1&cliente_id=${id}`;
+        const config = {
+            method : 'GET'
+        }
+
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+            
+            const {codigo, mensaje, detalle} = data;
+
+            switch (codigo) {
+                case 1:
+                    buscar();
+                    break;
+            
+                case 0:
+                    console.log(detalle, mensaje)
+                    break;
+            
+                default:
+                    break;
+            }
+
+            alert(mensaje);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
-}
 
 
 const modificar = async (evento) => {
@@ -208,6 +238,5 @@ buscar();
 
 formulario.addEventListener('submit', guardar )
 btnModificar.addEventListener('click', modificar)
-// btnEliminar.addEventListener('click', eliminar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)

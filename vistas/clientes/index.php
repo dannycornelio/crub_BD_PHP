@@ -36,7 +36,7 @@
         <div class="row justify-content-center" id="divTabla">
             <div class="col-lg-8">
                 <h2>Listado de clientes</h2>
-                <table class="table table-bordered table-hover" id="tablaClientes">
+                <table class="table table-bordered table-hover" id="tablaCLientes">
                     <thead class="table-dark">
                         <tr>
                             <th>NO. </th>
