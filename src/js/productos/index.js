@@ -154,6 +154,41 @@ const cancelarAccion = () => {
 }
 
 
+const eliminar = async (id) => {
+    if(confirm("¿Desea eliminar este producto?")){
+        
+        const url = `/crudphp18may2023/controladores/productos/index.php?tipo=1&producto_id=${id}`;
+        const config = {
+            method : 'GET'
+        }
+
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+            
+            const {codigo, mensaje, detalle} = data;
+
+            switch (codigo) {
+                case 1:
+                    buscar();
+                    break;
+            
+                case 0:
+                    console.log(detalle, mensaje)
+                    break;
+            
+                default:
+                    break;
+            }
+
+            alert(mensaje);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
 
 
 
@@ -203,7 +238,7 @@ const modificar = async (e) => {
 buscar();
 
 formulario.addEventListener('submit', guardar )
-btnModificar.addEventListener('click', modificar)
-btnEliminar.addEventListener('click', eliminar)
+//btnModificar.addEventListener('click', modificar)
+//btnEliminar.addEventListener('click', eliminar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
