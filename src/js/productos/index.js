@@ -24,7 +24,6 @@ const guardar = async (evento) => {
     const url = '/crudphp18may2023/controladores/productos/index.php';
     const config = {
         method : 'POST',
-        // body: otroNombre
         body
     }
 
@@ -155,9 +154,98 @@ const cancelarAccion = () => {
 }
 
 
+// const eliminar5 = (id) => {
+//     if(confirm("¿Desea eliminar este producto?")){
+//         alert("eliminando")
+//     }
+// }
+
+
 const eliminar = (id) => {
-    if(confirm("¿Desea eliminar este producto?")){
-        alert("eliminando")
+    if (confirm("¿Desea eliminar este producto?")) {
+        // Realizar la llamada al servidor para eliminar el producto
+        fetch(`eliminar_producto.php?id=${id}`, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Aquí puedes manejar la respuesta del servidor si es necesario
+            // No es necesario mostrar una alerta aquí, ya que ya mostramos un mensaje en la función buscar()
+            // alert("Producto eliminado exitosamente");
+
+            // Luego de eliminar, realizamos la petición POST tipo 3 para limpiar el formulario
+            realizarAccionTipo3();
+        })
+        .catch(error => {
+            // Manejar el error si ocurre
+            console.error('Error al eliminar el producto:', error);
+        });
+    }
+};
+
+const realizarAccionTipo3 = () => {
+    const body = new FormData(formulario);
+    body.append('tipo', 3);
+    body.delete('producto_id');
+    const url = '/crudphp18may2023/controladores/productos/index.php';
+    const config = {
+        method : 'POST',
+        body
+    };
+
+    fetch(url, config)
+    .then(response => response.json())
+    .then(data => {
+        // Aquí puedes manejar la respuesta del servidor si es necesario
+        alert("Acción tipo 3 realizada exitosamente");
+        // También puedes realizar alguna otra acción si es necesario
+    })
+    .catch(error => {
+        // Manejar el error si ocurre
+        console.error('Error al realizar la acción tipo 3:', error);
+    });
+};
+
+
+const modificar = async (evento) => {
+    evento.preventDefault();
+    if(!validarFormulario(formulario)){
+        alert('Debe llenar todos los campos');
+        return 
+    }
+
+    const body = new FormData(formulario)
+    body.append('tipo', 2)
+    const url = '/crudphp18may2023/controladores/productos/index.php';
+    const config = {
+        method : 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        
+        const {codigo, mensaje, detalle} = data;
+
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                buscar();
+                break;
+        
+            case 0:
+                console.log(detalle)
+                break;
+        
+            default:
+                break;
+        }
+
+        alert(mensaje);
+
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -165,5 +253,7 @@ const eliminar = (id) => {
 buscar();
 
 formulario.addEventListener('submit', guardar )
+btnModificar.addEventListener('click', modificar)
+btnEliminar.addEventListener('click', eliminar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)

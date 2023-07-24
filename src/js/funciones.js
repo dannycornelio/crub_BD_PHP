@@ -6,6 +6,8 @@ const validarFormulario = (formulario, excepciones = [] ) => {
             element.classList.add('is-invalid');
           
             validarFormulario.push(false)
+           
+            //validarFormulario[element.name] = element.value;
         }else{
             element.classList.remove('is-invalid');
         }

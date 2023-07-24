@@ -3,6 +3,15 @@
     $metodo = $_SERVER['REQUEST_METHOD'];
     $tipo = $_POST['tipo'];
 
+
+    /*
+    GET = Listar los productos
+    POST = Guardar nuevos productos
+    PUT = Modifica producto existente
+    DELETE = para eliminar un producto
+    
+    */
+
     
     try {
 
