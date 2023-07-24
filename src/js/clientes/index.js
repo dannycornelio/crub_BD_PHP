@@ -1,5 +1,5 @@
 const formulario = document.querySelector('form')
-const tablaProductos = document.getElementById('tablaProductos');
+const tablaCLientes = document.getElementById('tablaCLientes');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
@@ -13,18 +13,17 @@ btnCancelar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    if(!validarFormulario(formulario, ['producto_id'])){
+    if(!validarFormulario(formulario, ['cliente_id'])){
         alert('Debe llenar todos los campos');
         return 
     }
 
     const body = new FormData(formulario)
     body.append('tipo', 1)
-    body.delete('producto_id')
-    const url = '/crudphp18may2023/controladores/productos/index.php';
+    body.delete('cliente_id')
+    const url = '/crudphp18may2023/controladores/clientes/index.php';
     const config = {
         method : 'POST',
-        // body: otroNombre
         body
     }
 
@@ -57,9 +56,9 @@ const guardar = async (evento) => {
 
 const buscar = async () => {
 
-    let producto_nombre = formulario.producto_nombre.value;
-    let producto_precio = formulario.producto_precio.value;
-    const url = `/crudphp18may2023/controladores/productos/index.php?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
+    let cliente_nombre = formulario.cliente_nombre.value;
+    let cliente_nit = formulario.cliente_nit.value;
+    const url = `/crudphp18may2023/controladores/clientes/index.php?cliente_nombre=${cliente_nombre}&cliente_nit=${cliente_nit}`;
     const config = {
         method : 'GET'
     }
@@ -68,12 +67,12 @@ const buscar = async () => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
         
-        tablaProductos.tBodies[0].innerHTML = ''
+        tablaCLientes.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
         console.log(data);
         if(data.length > 0){
             let contador = 1;
-            data.forEach( producto => {
+            data.forEach( cliente => {
                 // CREAMOS ELEMENTOS
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td')
@@ -90,12 +89,12 @@ const buscar = async () => {
                 buttonModificar.textContent = 'Modificar'
                 buttonEliminar.textContent = 'Eliminar'
 
-                buttonModificar.addEventListener('click', () => colocarDatos(producto))
-                buttonEliminar.addEventListener('click', () => eliminar(producto.PRODUCTO_ID))
+                buttonModificar.addEventListener('click', () => colocarDatos(cliente))
+                buttonEliminar.addEventListener('click', () => eliminar(cliente.CLIENTE_ID))
 
                 td1.innerText = contador;
-                td2.innerText = producto.PRODUCTO_NOMBRE
-                td3.innerText = producto.PRODUCTO_PRECIO
+                td2.innerText = cliente.CLIENTE_NOMBRE
+                td3.innerText = cliente.CLIENTE_NIT
                 
                 
                 // ESTRUCTURANDO DOM
@@ -120,16 +119,16 @@ const buscar = async () => {
             fragment.appendChild(tr);
         }
 
-        tablaProductos.tBodies[0].appendChild(fragment)
+        tablaCLientes.tBodies[0].appendChild(fragment)
     } catch (error) {
         console.log(error);
     }
 }
 
 const colocarDatos = (datos) => {
-    formulario.producto_nombre.value = datos.PRODUCTO_NOMBRE
-    formulario.producto_precio.value = datos.PRODUCTO_PRECIO
-    formulario.producto_id.value = datos.PRODUCTO_ID
+    formulario.cliente_nombre.value = datos.CLIENTE_NOMBRE
+    formulario.cliente_nit.value = datos.CLIENTE_NIT
+    formulario.cliente_id.value = datos.CLIENTE_ID
 
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
@@ -155,9 +154,52 @@ const cancelarAccion = () => {
 }
 
 
-const eliminar = (id) => {
-    if(confirm("¿Desea eliminar este producto?")){
-        alert("eliminando")
+// const eliminar = (id) => {
+//     if(confirm("¿Desea eliminar este cliente?")){
+//         alert("eliminando")
+//     }
+// }
+
+
+const modificar = async (evento) => {
+    evento.preventDefault();
+    if(!validarFormulario(formulario)){
+        alert('Debe llenar todos los campos');
+        return 
+    }
+
+    const body = new FormData(formulario)
+    body.append('tipo', 2)
+    const url = '/crudphp18may2023/controladores/clientes/index.php';
+    const config = {
+        method : 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        
+        const {codigo, mensaje, detalle} = data;
+
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                buscar();
+                break;
+        
+            case 0:
+                console.log(detalle)
+                break;
+        
+            default:
+                break;
+        }
+
+        alert(mensaje);
+
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -165,5 +207,7 @@ const eliminar = (id) => {
 buscar();
 
 formulario.addEventListener('submit', guardar )
+btnModificar.addEventListener('click', modificar)
+btnEliminar.addEventListener('click', eliminar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
