@@ -154,11 +154,11 @@ const cancelarAccion = () => {
 }
 
 
-// const eliminar = (id) => {
-//     if(confirm("¿Desea eliminar este cliente?")){
-//         alert("eliminando")
-//     }
-// }
+const eliminar = (id) => {
+    if(confirm("¿Desea eliminar este cliente?")){
+        alert("eliminando")
+    }
+}
 
 
 const modificar = async (evento) => {
@@ -208,6 +208,6 @@ buscar();
 
 formulario.addEventListener('submit', guardar )
 btnModificar.addEventListener('click', modificar)
-btnEliminar.addEventListener('click', eliminar)
+// btnEliminar.addEventListener('click', eliminar)
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
