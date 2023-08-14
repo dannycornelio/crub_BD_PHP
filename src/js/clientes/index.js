@@ -50,7 +50,7 @@ const guardar = async (e) => {
                 break;
         }
         Swal.fire({icon: 'success', text: 'Se guardo exitosamente'})
-        return; 
+        return
 
 
     } catch (error) {
